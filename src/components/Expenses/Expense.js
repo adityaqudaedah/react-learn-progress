@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-
-import ExpenseItems from "./ExpenseItems";
+import ExpensesList from "./ExpensesList";
 import "./Expenses.css";
 import Card from "../UI/Card";
 import ExpenseFilter from "./ExpensesFilter";
-import not_found from "../../img/not_found.svg";
+
 
 function Expense(props) {
   const [filteredYear, setFilteredYear] = useState("2021");
@@ -17,22 +16,6 @@ function Expense(props) {
     return expense.date.getFullYear().toString() === filteredYear;
   });
 
-  let expenseContent = (
-    <div className="expenses_not_found">
-      <img src={not_found} alt="" /> <p>Expenses not found here...</p>
-    </div>
-  );
-
-  if (filteredExpenses.length > 0) {
-    expenseContent = filteredExpenses.map((expense) => (
-      <ExpenseItems
-        key={expense.id}
-        title={expense.title}
-        amount={expense.amount}
-        date={expense.date}
-      />
-    ));
-  }
 
   return (
     <div>
@@ -41,7 +24,7 @@ function Expense(props) {
           selected={filteredYear}
           onChangeFilter={changeFilterHandler}
         />
-        {expenseContent}
+       <ExpensesList sortedData={filteredExpenses}/>
       </Card>
     </div>
   );
